@@ -232,6 +232,7 @@ class User {
         
         console.log(`${quantity} ${item.name}'s have been removed from ${this.name}'s cart.`)
         }
+    }
 
     /* - cartTotal
         - this method will calculate the total price of all items in our cart and RETURNS that value*/
@@ -243,6 +244,17 @@ class User {
         return total;
     }
 
+    /*- printCart
+    - this method will take a user and console log the items in the users cart*/
+    printCart(): void {
+        console.log(`${this.name}'s cart:`)
+        for (let item of this._cart) {
+            console.log(item.name)
+        }
+        console.log(`The total cost of ${this.name}'s cart is $${this.cartTotal()}.`)
+    }
+
+
 }
 
 /*- Create a class to describe a Shop
@@ -252,9 +264,9 @@ class User {
 
 class Shop {
     private _items: Item[];
-    constructor() {
-        this._items = [];
-    }
+    // constructor() {
+    //     this._items = [];
+    // }
 
     public get items(): Item[] {
     return this._items;
@@ -262,6 +274,16 @@ class Shop {
     public set items(value: Item[]) {
     this._items = value;
     }
+
+    /*- constructor
+        - The constructor will create three (3) Items and add them to the list of items in the shop */
+    constructor() {
+        this._items = [];
+        this._items.push(new Item('Quinoa', 25.00, 'Organic white quinoa, unwashed'));
+        this._items.push(new Item('Monstera Leaf Plant', 10.00, 'A beautiful, large leafed house plant'));
+        this._items.push(new Item('Cork Yoga Mat', 45.00, 'A comfortable, lightweight, all-natural yoga mat'));
+    }
+
 }
 
 // - User Class Methods:
@@ -272,3 +294,32 @@ function addToCart(user: User, item: Item):void{
     user.cart.push(item);
     console.log(`${item.name} has been added to ${user.name}'s cart.`)
 }
+
+/*Create Driver Code to emulate a front end user
+- use the functions created to accomplish these tasks in order
+- Create a Shop
+- Create a User
+- Create some code to add items from the shop to the users cart, print the cart and remove all of a singular item from the cart and remove a quantity from a cart.
+- Verify all functions work as expected, if they don't figure out why not and fix your functions.*/
+
+// Create a Shop
+let shop = new Shop();
+
+//Create a User
+let customer = new User('Adonai', 26);
+
+// Create some code to add items from the shop to the users cart, print the cart and remove all of a singular item from the cart and remove a quantity from a cart.
+addToCart(customer, shop.items[0]);
+addToCart(customer, shop.items[1]);
+addToCart(customer, shop.items[1]);
+addToCart(customer, shop.items[1]);
+addToCart(customer, shop.items[2]);
+addToCart(customer, shop.items[2]);
+addToCart(customer, shop.items[2]);
+customer.printCart();
+
+customer.removeFromCart(shop.items[1]);
+customer.printCart();
+
+customer.removeQuantityFromCart(shop.items[2], 2);
+customer.printCart();
