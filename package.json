@@ -23,13 +23,5 @@
   "dependencies": {
     "live-server": "^1.2.2",
     "uuid": "^9.0.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/adonaione/wk8-TScartProj.git"
-  },
-  "bugs": {
-    "url": "https://github.com/adonaione/wk8-TScartProj/issues"
-  },
-  "homepage": "https://github.com/adonaione/wk8-TScartProj#readme"
+  }
 }
