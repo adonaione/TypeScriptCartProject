@@ -40,7 +40,7 @@ class Item {
     this._description = value;
     }
 
-    /* - itemElement() - this will return an HTML Div Element.  This element will be something like a card that represents all the information about one item.  It will show the Items Name, Description and Price, and have an add to cart button. add the Eventlistener for addToCart here  */
+   
     itemElement(): HTMLDivElement {
         let itemDiv = document.createElement('div');
         itemDiv.id = this._id;
