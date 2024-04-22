@@ -267,7 +267,12 @@ class Shop {
     // static myUser property. This property will be either undefined (before the user "logins" or an actual User Object)  This will represent the person shopping at our store
     // static myUser: User | undefined;
     // static loginUser(event) - This will be a static function.  This will be attached to our "login/create user" button to be ran when the user logs in.  This method should create a user and save it to the myUser static property. If that user was created successfully it should then create the shop and cart elements on the page.
-    static loginUser(event: Event): void {
+    // Identify the target element
+    const loginButton = document.getElementById("login-button"); 
+    // Add event listener to the target element
+    loginButton.addEventListener("click", loginUser);
+    // Define the loginUser function
+    static loginUser(event:Event) {
         event.preventDefault();
         Shop.myUser = User.loginUser();
         if (Shop.myUser) {
@@ -276,6 +281,7 @@ class Shop {
             shop.updateCart(); // Remove the argument from the updateCart method call
         }
     }
+
     // constructor() - This should now create SIX (6) items for your shop to sell.  It will also build out the shop div using the showItems() method, it will build out the cart section using the updateCart method.
     constructor(
         private _items: Item[]

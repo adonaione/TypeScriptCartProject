@@ -1190,9 +1190,7 @@ class Shop {
             Shop.myUser.addRemoveEventListeners();
         }
     }
-    // static myUser property. This property will be either undefined (before the user "logins" or an actual User Object)  This will represent the person shopping at our store
-    // static myUser: User | undefined;
-    // static loginUser(event) - This will be a static function.  This will be attached to our "login/create user" button to be ran when the user logs in.  This method should create a user and save it to the myUser static property. If that user was created successfully it should then create the shop and cart elements on the page.
+    // Define the loginUser function
     static loginUser(event) {
         event.preventDefault();
         Shop.myUser = User.loginUser();
@@ -1205,6 +1203,11 @@ class Shop {
     // constructor() - This should now create SIX (6) items for your shop to sell.  It will also build out the shop div using the showItems() method, it will build out the cart section using the updateCart method.
     constructor(_items) {
         this._items = _items;
+        // static myUser property. This property will be either undefined (before the user "logins" or an actual User Object)  This will represent the person shopping at our store
+        // static myUser: User | undefined;
+        // static loginUser(event) - This will be a static function.  This will be attached to our "login/create user" button to be ran when the user logs in.  This method should create a user and save it to the myUser static property. If that user was created successfully it should then create the shop and cart elements on the page.
+        // Identify the target element
+        this.loginButton = document.getElementById("login-button");
         this._items = [];
         this._items.push(new Item("Quinoa", 25.00, 'Organic white quinoa, unwashed'));
         this._items.push(new Item("Monstera Leaf Plant", 10.00, 'A beautiful, large leafed house plant'));
