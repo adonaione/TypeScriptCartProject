@@ -2,7 +2,7 @@
   "name": "ts-cart",
   "version": "1.0.0",
   "description": "day4 homework for typescript",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "start": "npm run bundle && npm-run-all --parallel watch serve",
     "bundle": "webpack",

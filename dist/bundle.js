@@ -1097,8 +1097,8 @@ class User {
         }
         console.log(`The total cost of ${this.name}'s cart is $${this.cartTotal()}.`);
     }
-    /* static loginInUser() : Create a Static function that will retrieve the infomation from the HTML input field for nameand age. The function should return a new User created with the name and age, if a new and age was provided otherwise it can return null or undefined.  Note: This method is static because it doesn't need to work with a User instance.  And to call this static method somewhere else in code it would look like User.createUser() */
-    static loginUser() {
+    /* static createUser() : Create a Static function that will retrieve the information from the HTML input field for name and age. The function should return a new User created with the name and age, if a name and age was provided otherwise it can return null or undefined.  Note: This method is static because it doesn't need to work with a User instance.  And to call this static method somewhere else in code it would look like User.createUser() */
+    static createUser() {
         let name = document.getElementById('name').value;
         let age = parseInt(document.getElementById('age').value);
         if (name && age) {
@@ -1196,7 +1196,8 @@ class Shop {
     // Define the loginUser function
     static loginUser(event) {
         event.preventDefault();
-        Shop.myUser = User.loginUser();
+        console.log('I exist');
+        Shop.myUser = User.createUser();
         if (Shop.myUser) {
             let shop = new Shop([]); // Pass an empty array as the argument to the Shop constructor
             shop.showItems();
