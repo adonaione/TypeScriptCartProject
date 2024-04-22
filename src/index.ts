@@ -173,6 +173,7 @@ class User {
         } else {
             console.log('undefined');
         }
+        return undefined; // Add this line to return undefined if the if condition is not met
     }
 
     /*  - cartHTMLElement() : This will return an HTML Div Element.  This function will loop over your cart and create some HTML Code to layout your cart items in a formatted way to have the Name, Quantity and price of each item shown.  You will also create a button to Remove All or Remove Just One of these items from the cart. The event listenering for these buttons will be created ina  different function. Remember: You'll need to devise a way that each add and remove element is tied to a particular item (an easy way to do this is give every button an id based off the items UUIID and precede/follow the UUID with a tag that says whether the button is a remove one or remove all button)*/
