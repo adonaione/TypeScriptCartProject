@@ -267,10 +267,7 @@ class Shop {
     // static myUser property. This property will be either undefined (before the user "logins" or an actual User Object)  This will represent the person shopping at our store
     // static myUser: User | undefined;
     // static loginUser(event) - This will be a static function.  This will be attached to our "login/create user" button to be ran when the user logs in.  This method should create a user and save it to the myUser static property. If that user was created successfully it should then create the shop and cart elements on the page.
-    // Identify the target element
-    const loginButton = document.getElementById("login-button"); 
-    // Add event listener to the target element
-    loginButton.addEventListener("click", loginUser);
+    
     // Define the loginUser function
     static loginUser(event:Event) {
         event.preventDefault();
@@ -298,14 +295,6 @@ class Shop {
     }
 }
 
-// - User Class Methods:
-/* - addToCart
-    - this method will bring an object of Item Type and it will add the item to the users cart */
-
-function addToCart(user: User, item: Item):void{
-    user.cart.push(item);
-    console.log(`${item.name} has been added to ${user.name}'s cart.`)
-}
 
 /*## Driver Code
     - We will need a little bit of code to run on page load. We can do this simply by writing this code outside of our classes and functions.  Thi code will add the loginUser method to the login/create user Button*/
