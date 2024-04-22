@@ -54,9 +54,10 @@ class Item {
         addToCartButton.innerText = 'Add to Cart';
         addToCartButton.id = `addToCart-${this._id}`;
         addToCartButton.addEventListener('click', () => {
-            Shop.myUser.addToCart(this);
-            Shop.myUser.printCart();
-            // Shop.myUser.updateCart(Shop.myUser);
+            if (Shop.myUser) {
+                Shop.myUser.addToCart(this);
+                Shop.myUser.printCart();
+            }
         });
         itemDiv.appendChild(itemName);
         itemDiv.appendChild(itemDescription);
@@ -164,13 +165,12 @@ class User {
     }
 
     /* static loginInUser() : Create a Static function that will retrieve the infomation from the HTML input field for nameand age. The function should return a new User created with the name and age, if a new and age was provided otherwise it can return null or undefined.  Note: This method is static because it doesn't need to work with a User instance.  And to call this static method somewhere else in code it would look like User.createUser() */
-    static loginUser(): User {
+    static loginUser(): User | undefined {
         let name = (<HTMLInputElement>document.getElementById('name')).value;
         let age = parseInt((<HTMLInputElement>document.getElementById('age')).value);
         if (name && age) {
             return new User(name, age);
         } else {
-            return undefined;
             console.log('undefined');
         }
     }
@@ -201,21 +201,27 @@ class User {
     /* -addRemoveEventListeners() - This function adds event listeners to your cart's Remove One/Remove All Buttons.  They will use the previously build removeQuantityFromCart and removeFromCart functions built in the prev. nights homework. */
     addRemoveEventListeners(): void {
         let cartDiv = document.getElementById('cart');
-        for (let item of this._cart) {
-            let removeButton = document.getElementById(`removeAll-${item.id}`);
-            let removeOneButton = document.getElementById(`removeOne-${item.id}`);
-            removeButton.addEventListener('click', () => {
-                this.removeFromCart(item);
-                cartDiv.innerHTML = '';
-                cartDiv.appendChild(this.cartHTMLElement());
-                this.addRemoveEventListeners();
-            });
-            removeOneButton.addEventListener('click', () => {
-                this.removeQuantityFromCart(item, 1);
-                cartDiv.innerHTML = '';
-                cartDiv.appendChild(this.cartHTMLElement());
-                this.addRemoveEventListeners();
-            });
+        if (cartDiv) {
+            for (let item of this._cart) {
+                let removeButton = document.getElementById(`removeAll-${item.id}`);
+                let removeOneButton = document.getElementById(`removeOne-${item.id}`);
+                if (removeButton) {
+                    removeButton.addEventListener('click', () => {
+                        this.removeFromCart(item);
+                        cartDiv.innerHTML = '';
+                        cartDiv.appendChild(this.cartHTMLElement());
+                        this.addRemoveEventListeners();
+                    });
+                }
+                if (removeOneButton) {
+                    removeOneButton.addEventListener('click', () => {
+                        this.removeQuantityFromCart(item, 1);
+                        cartDiv.innerHTML = '';
+                        cartDiv.appendChild(this.cartHTMLElement());
+                        this.addRemoveEventListeners();
+                    });
+                }
+            }
         }
     }
 
@@ -238,47 +244,48 @@ class Shop {
     /*  showItems() - This method will loop over all the shop items and add each items itemElement to the shop div of the HTML */
     showItems(): void {
         let shopDiv = document.getElementById('shop');
-        for (let item of this._items) {
-            shopDiv.appendChild(item.itemElement());
+        if (shopDiv) {
+            for (let item of this._items) {
+                shopDiv.appendChild(item.itemElement());
+            }
         }
     }
 
     /* updateCart() - This method will create the cart contents and display them to the cart div in the HTML.  If the Cart is empty it should say the cart is empty, if the cart contains Items it will list all the cart items using the cartHTMLElement method and the addRemoveEventListeners function. */
     updateCart(): void {
         const cartDiv = document.getElementById('cart') as HTMLElement;
-        if (Shop.myUser.cart.length === 0) {
+        if (Shop.myUser && Shop.myUser.cart.length === 0) {
             cartDiv.innerText = 'Your cart is empty.';
-        } else {
+        } else if (Shop.myUser) {
             cartDiv.innerHTML = '';
             cartDiv.appendChild(Shop.myUser.cartHTMLElement());
             Shop.myUser.addRemoveEventListeners();
         }
-
     }
 
     // static myUser property. This property will be either undefined (before the user "logins" or an actual User Object)  This will represent the person shopping at our store
     // static myUser: User | undefined;
     // static loginUser(event) - This will be a static function.  This will be attached to our "login/create user" button to be ran when the user logs in.  This method should create a user and save it to the myUser static property. If that user was created successfully it should then create the shop and cart elements on the page.
-    static loginUser(event): void {
+    static loginUser(event: Event): void {
         event.preventDefault();
         Shop.myUser = User.loginUser();
         if (Shop.myUser) {
-            let shop = new Shop();
+            let shop = new Shop([]); // Pass an empty array as the argument to the Shop constructor
             shop.showItems();
-            shop.updateCart(Shop.myUser);
+            shop.updateCart(); // Remove the argument from the updateCart method call
         }
     }
     // constructor() - This should now create SIX (6) items for your shop to sell.  It will also build out the shop div using the showItems() method, it will build out the cart section using the updateCart method.
     constructor(
-        private _items: Item[];
+        private _items: Item[]
     ) {
         this._items = [];
-        this._items.push(new Item('Quinoa', 25.00, 'Organic white quinoa, unwashed'));
-        this._items.push(new Item('Monstera Leaf Plant', 10.00, 'A beautiful, large leafed house plant'));
-        this._items.push(new Item('Cork Yoga Mat', 45.00, 'A comfortable, lightweight, all-natural yoga mat'));
-        this._items.push(new Item('Ceramic Coffee Mug', 15.00, 'A handcrafted ceramic coffee mug'));
-        this._items.push(new Item('Cotton Throw Blanket', 20.00, 'A soft, cozy cotton throw blanket'));
-        this._items.push(new Item('Soy Candle', 12.00, 'A hand-poured soy candle'));
+        this._items.push(new Item("Quinoa", 25.00, 'Organic white quinoa, unwashed'));
+        this._items.push(new Item("Monstera Leaf Plant", 10.00, 'A beautiful, large leafed house plant'));
+        this._items.push(new Item("Cork Yoga Mat", 45.00, 'A comfortable, lightweight, all-natural yoga mat'));
+        this._items.push(new Item("Ceramic Coffee Mug", 15.00, 'A handcrafted ceramic coffee mug'));
+        this._items.push(new Item("Cotton Throw Blanket", 20.00, 'A soft, cozy cotton throw blanket'));
+        this._items.push(new Item("Soy Candle", 12.00, 'A hand-poured soy candle'));
         this.showItems();
         this.updateCart();
     }
@@ -296,4 +303,4 @@ function addToCart(user: User, item: Item):void{
 /*## Driver Code
     - We will need a little bit of code to run on page load. We can do this simply by writing this code outside of our classes and functions.  Thi code will add the loginUser method to the login/create user Button*/
 
-document.getElementById('login').addEventListener('click', Shop.loginUser);
+document.getElementById('login')?.addEventListener('click', Shop.loginUser);
